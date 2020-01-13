@@ -1,10 +1,14 @@
+# Created by: Aymen Al-Quaiti
+# For QCTRL Backend Challenge
+# January  2020
+
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 from control.models import Control
 
 
-class ModelTests(TestCase):
-    """Used to tests all models within control"""
+class ControlModelTests(TestCase):
+    """Used to test Control"""
 
     def test_create_control(self):
         """Test that a control was created"""

@@ -1,5 +1,11 @@
-version: "3.5"
+# Created by: Aymen Al-Quaiti
+# For QCTRL Backend Challenge
+# 2020
 
+# Created to ease running and testing the challenge app
+
+
+version: "3.5"
 
 services:
 #  app:

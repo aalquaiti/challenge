@@ -1,23 +1,39 @@
+# Created by: Aymen Al-Quaiti
+# For QCTRL Backend Challenge
+# January  2020
+"""
+Contains all models related to Control
+"""
+
 from django.db import models
 from django.db.models.signals import pre_save
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
 
 
-# TODO delete this nonsense. The model serializer does it by default
 def validate_control(sender, instance, **kwargs):
     """
-    Used to validate Control Model as Follow:
+    Used to validate Control Model. Although Model Serializer and BrowsableAPI provides validation, calling the create
+    method directly will not enforce validation. Model is called directly when processing uploaded csv file
+    This function is used as callable with pre_save signal. The following are validated:
     Name must not be null or empty
     Type should be within defined choices
     Maximum Rabi Rate must have a value between 0 and 100
     Polar Angle must have a value between 0 and 1
+
+    args:
+        sender: The Model
+        instance: Model instance containing data being validated
+        **kwargs: Further arguments passed
+
+    raise:
+        ValidationError if one of the requirements were not met
     """
 
     if not instance.name:
         raise ValidationError('Control must have a name')
 
-    if instance.type.lower() not in Control.TYPE:
+    if instance.type not in (value[0] for value in Control.TYPE_CHOICES):
         raise ValidationError('Control type must be: Primitive, CORPSE, Gaussian, CinBB or CinSK')
 
     if not (0 <= instance.maximum_rabi_rate <= 100):
@@ -28,7 +44,9 @@ def validate_control(sender, instance, **kwargs):
 
 
 class Control(models.Model):
-    """Defines a Control Model"""
+    """
+    Defines a Control Model
+    """
 
     # The following represents types of Control
     PRIMITIVE = 'Primitive'
@@ -44,8 +62,6 @@ class Control(models.Model):
         (CINBB, 'CinBB'),
         (CINSK, 'CinSK'),
     ]
-    # A list used for validation
-    TYPE = [value[0].lower() for value in TYPE_CHOICES]
 
     # Name of the control
     name = models.CharField(max_length=255)
@@ -69,4 +85,5 @@ class Control(models.Model):
         return self.name
 
 
+# Callable Added to validation fields before creation / update
 pre_save.connect(validate_control, sender=Control)

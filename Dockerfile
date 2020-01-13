@@ -1,3 +1,10 @@
+# Created by: Aymen Al-Quaiti
+# For QCTRL Backend Challenge
+# January 2020
+
+# Dockerizes Django app with all required python dependencies
+
+
 # Build image that have python dependencies through pipenv
 FROM python:3.7-alpine as qctrl_app_build
 # set work directory

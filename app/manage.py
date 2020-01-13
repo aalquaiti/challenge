@@ -1,5 +1,10 @@
-#!/usr/bin/env python
-"""Django's command-line utility for administrative tasks."""
+# Created by: Aymen Al-Quaiti
+# For QCTRL Backend Challenge
+# January  2020
+"""
+Auto-generated file used by Django to manage framework
+"""
+
 import os
 import sys
 
