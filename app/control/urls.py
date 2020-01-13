@@ -1,11 +1,11 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from control import views
+from .views import ControlViewSet, ControlCSVViewSet
 
 router = DefaultRouter()
-router.register('control', views.ControlViewSet)
+router.register('control', ControlViewSet)
+router.register('download', ControlCSVViewSet)
 
 urlpatterns = [
-    # path('control/upload/', views.ControlUploadView),
     path('', include(router.urls)),
 ]
