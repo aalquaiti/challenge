@@ -106,6 +106,37 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Setting up Rest Framework
+# Based on https://medium.com/@johnking_75842/django-rest-framework-api-setup-w-jsonapi-and-postgres-database-2cd11038b43b
+REST_FRAMEWORK = {
+    'PAGE_SIZE': 5,
+    'EXCEPTION_HANDLER': 'rest_framework_json_api.exceptions.exception_handler',
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework_json_api.pagination.JsonApiPageNumberPagination',
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework_json_api.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser'
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework_json_api.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework_csv.renderers.CSVRenderer',
+    ),
+    'DEFAULT_METADATA_CLASS': 'rest_framework_json_api.metadata.JSONAPIMetadata',
+    'DEFAULT_FILTER_BACKENDS': (
+        'rest_framework_json_api.filters.QueryParameterValidationFilter',
+        'rest_framework_json_api.filters.OrderingFilter',
+        'rest_framework_json_api.django_filters.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+    ),
+    'SEARCH_PARAM': 'filter[search]',
+    'TEST_REQUEST_RENDERER_CLASSES': (
+        'rest_framework_json_api.renderers.JSONRenderer',
+    ),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'vnd.api+json'
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

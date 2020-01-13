@@ -4,6 +4,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
 
 
+# TODO delete this nonsense. The model serializer does it by default
 def validate_control(sender, instance, **kwargs):
     """
     Used to validate Control Model as Follow:
@@ -19,7 +20,7 @@ def validate_control(sender, instance, **kwargs):
     if instance.type.lower() not in Control.TYPE:
         raise ValidationError('Control type must be: Primitive, CORPSE, Gaussian, CinBB or CinSK')
 
-    if not (0 <= instance.max_rabi_rate <= 100):
+    if not (0 <= instance.maximum_rabi_rate <= 100):
         raise ValidationError('Maximum Rabi Rate value must be between 0 and 100')
 
     if not (0 <= instance.polar_angle <= 1):
@@ -54,7 +55,9 @@ class Control(models.Model):
 
     # maximum achievable angular frequency of the Rabi cycle for a driven quantum transition.
     # Must be between 0 and 100
-    max_rabi_rate = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+    maximum_rabi_rate = models.DecimalField(
+        max_digits=8, decimal_places=5, validators=[MinValueValidator(0), MaxValueValidator(100)]
+    )
 
     # An angle measured from the z-axis on the Bloch sphere. Must be between 0 and 1 (units of pi)
     polar_angle = models.DecimalField(max_digits=6, decimal_places=5, validators=[MinValueValidator(0),
