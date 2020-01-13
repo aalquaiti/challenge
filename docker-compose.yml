@@ -23,8 +23,7 @@ services:
 #      - qctrl_app
 #    depends_on:
 #      - postgres
-#    command: python manage.py runserver
-##      - sh -c "python manage.py runserver 0.0.0.0:8000"
+#    command: python manage.py runserver ${APP_HOST:-0.0.0.0}:${APP_PORT:-8000}
 
   pgadmin:
     image: dpage/pgadmin4
@@ -53,7 +52,7 @@ services:
     volumes:
       - ./.postgres:/data/postgres
     ports:
-      - "5432:5432"
+      - "15432:5432"
     networks:
       - qctrl_app
     restart: unless-stopped

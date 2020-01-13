@@ -12,8 +12,27 @@ class ControlAPI(TestCase):
         self.client = APIClient()
 
 
-    def test_create_new_control(self):
-        pass
+    def test_create_success(self):
+        """
+        Tests Control can be created successfully given right format
+        """
+        data = '''
+            {
+                "data": {
+                    "type": "Control",
+                    "id": null,
+                    "attributes": {
+                        "name": "Abdullah",
+                        "type": "CinSK",
+                        "maximum_rabi_rate": 12.45,
+                        "polar_angle": 0.5
+                    }
+                }
+            }
+        '''
+        response = self.client.post('/api/control/', data, format='vnd.api+json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     # def test_list_all(self):
     #
