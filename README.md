@@ -6,8 +6,10 @@ This Django project is created as part of the backend engineering challenge post
 
 - [Requirements](#Requirements)
 - [Usage](#Usage)
-- [Alternative Installation](#credits)
-- [Assumptions](#license)
+- [Assumptions](#Assumptions)
+- [API](#API)
+- [Alternative Installation](#alternative-installation)
+
 
 ## Requirements
 This project needs to following:
@@ -69,6 +71,26 @@ Because all requirements are within the docker image, there is no need to instal
 `
 docker-compose build
 `
+
+# Assumptions
+There are some simple things that I assumed when creating the Control Model. These are:
+- Name will not exceed 255 character
+- type is case sensitive
+- maximum_rabi_rate and polar_angle have **5** decimal places
+
+# APIs
+The following serves as the seven required services in the challenge:
+
+| Service           | Path                 | Method  |
+|-------------------|----------------------|---------|
+| Create            | api/control          | POST    |
+| List              | api/control          | GET     |
+| Retrieve specific | api/control/{id}     | GET     |
+| Update specific   | api/control/{id}     | PUT     |
+| Delete specific   | api/control/{id}     | DELETE  |
+| Bulk Create       | api/control/upload   | POST    |
+| Download CSV      | api/control/download | GET     |
+
 
 # Alternative Installation
 The previous approach of having all requirements within docker helps to ease sharing development environment within a team, but it also comes with its disadvantages. If using an IDE, not having a python environment with all requirements would mean the IDE will not be able to function as its meant to be. 
