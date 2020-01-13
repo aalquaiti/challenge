@@ -12,12 +12,12 @@ This Django project is created as part of the backend engineering challenge post
 
 
 ## Requirements
-This project needs to following:
+This project needs the following:
 
 * docker (tested on 18.09)
 * docker-compose (1.17)
 
-The project heavily depends on docker to make it easy to test and run the project, and provides an simple point of entry for QCTRL members that will evaluate this project
+The project heavily depends on docker to make it easy to test and run the project, and provides a simple point of entry for QCTRL members that will evaluate this project
 
 ## Usage 
 In root directly of the repository, run the following command
@@ -42,7 +42,6 @@ In case default configurations are not desired, create a '.env' file in root fol
 
 | Configuration | Default Value |
 |-------------- |---------------|
-| APP_HOST      | 0.0.0.0       |
 | APP_PORT      | 8000          |
 | DB_NAME       | app           |
 | DB_USER       | postgres      |
@@ -54,7 +53,7 @@ PgAdmin can be reached from http://localhost:15050. Use the following Credential
 * **password**: password
 
 #### Running Test
-Make sure the docker-compose service are down, then run the command
+Make sure the docker-compose services are down, then run the command
 
 `
 docker-compose run app sh -c "python manage.py test"
@@ -64,7 +63,7 @@ This will run all unit tests written for the project
 
 
 #### Further development
-The docker-compose file is configured for the app image to have an attached volume linked to the app folder. This allows hot changes to be dynamically updated after each save.
+The docker-compose file is configured for the app image to have an attached volume linked to the app folder. This allows changes to be dynamically updated after each save.
 
 Because all requirements are within the docker image, there is no need to install any other requirements for development. In case a new library is needed, add it to the **Pipfile** inside the app folder. Then rebuild the image
 
@@ -78,24 +77,24 @@ There are some simple things that I assumed when creating the Control Model. The
 - type is case sensitive
 - maximum_rabi_rate and polar_angle have **5** decimal places
 
-# APIs
+# API
 The following serves as the seven required services in the challenge:
 
-| Service           | Path                 | Method  |
-|-------------------|----------------------|---------|
-| Create            | api/control          | POST    |
-| List              | api/control          | GET     |
-| Retrieve specific | api/control/{id}     | GET     |
-| Update specific   | api/control/{id}     | PUT     |
-| Delete specific   | api/control/{id}     | DELETE  |
-| Bulk Create       | api/control/upload   | POST    |
-| Download CSV      | api/control/download | GET     |
+| Service           | Path                  | Method  |
+|-------------------|-----------------------|---------|
+| Create            | /api/control          | POST    |
+| List              | /api/control          | GET     |
+| Retrieve specific | /api/control/{id}     | GET     |
+| Update specific   | /api/control/{id}     | PUT     |
+| Delete specific   | /api/control/{id}     | DELETE  |
+| Bulk Create       | /api/control/upload   | POST    |
+| Download CSV      | /api/control/download | GET     |
 
 
 # Alternative Installation
 The previous approach of having all requirements within docker helps to ease sharing development environment within a team, but it also comes with its disadvantages. If using an IDE, not having a python environment with all requirements would mean the IDE will not be able to function as its meant to be. 
 
-This section provides an alternative approach, explaining project requirements and and to run the application on local host without docker.
+This section provides an alternative approach, explaining project requirements and how to run the application on local host without docker.
 
 ### Requirements:
 * Python 3.7
@@ -105,7 +104,7 @@ This section provides an alternative approach, explaining project requirements a
 * Postgresql
 
 `
-Note: Do not use psyocpg2 binary distribution as it might cause problem when migrating database. Installing psycopg2 from source is a bit challenging, but all requirements are explained on the library's website
+Note: Do not use psyocpg2 binary distribution as it might cause problems when migrating to database. Installing psycopg2 from source is a bit challenging, but all requirements are explained on the library's website
 `
 
 ### Inital Setup:
@@ -144,6 +143,8 @@ To test, run the following command
 python manage.py test
 `
 
-To run the server in localhost:8000
+To run the server in localhost:8000, run
 `
 python manage.py runserver localhost:8000
+`
+

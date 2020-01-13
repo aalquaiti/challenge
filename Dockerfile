@@ -9,15 +9,15 @@
 FROM python:3.7-alpine as qctrl_app_build
 # set work directory
 WORKDIR /app
+
+# add user
+RUN adduser -D user
+RUN chown -R user:user /app && chmod -R 755 /app
 # The following commands install dependencies needed for psycopq2
-# Based on https://gist.github.com/LondonAppDev/58bcfd9b6267a60beda660aa91df6ddd
-RUN apk add --update --no-cache postgresql-client
-RUN apk add --update --no-cache --virtual .tmp-build-deps \
-      gcc libc-dev linux-headers postgresql-dev
+RUN apk --no-cache add build-base
+RUN apk --no-cache add postgresql-dev
 # Install dependencies
 RUN pip install pipenv
-# Delete Cached dependencies for building psycopq2
-RUN apk del .tmp-build-deps
 # Copy Pipfile and Pipfile.lock
 COPY ./app/Pipfile* ./
 RUN  pipenv install --system --deploy --ignore-pipfile
@@ -34,8 +34,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 WORKDIR /app
 # Copy All app files to working directory
 COPY ./app .
-# Adds user so the container won't have root privildges
+# Switch to non root user
 # See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
-RUN groupadd -r app && useradd --no-log-init -r -g app app
-USER app
+USER user
 
